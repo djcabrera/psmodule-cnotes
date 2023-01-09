@@ -24,7 +24,6 @@ function New-CNote {
     if ($review) {
         try {$notesFunctionData = Import-Csv $notesFunctionDataFile} 
         catch {Write-Host "No existing data to be reviewed."; Write-Host "Expected data file: $($notesFunctionDataFile)";break}
-        $notesFunctionData | Where-Object {$_.noteType -eq "title"} | Select-Object noteEntry,noteDatetime,noteType
         foreach ($item in $notesFunctionData) {
             if ($item.noteType -eq "title") {
                 $indexNumber = $notesFunctionData.indexOf($item)
@@ -83,10 +82,10 @@ $html = @"
         $exportFileNameDate = ($selectedData | Where-Object {$_.noteType -eq "title"} | select -ExpandProperty noteTimeStamp) | Get-Date -Format "yyyyMMdd"
         $exportFullFileName = "$($env:USERPROFILE)\Documents\CNotes\$($exportFileNameDate)-$($exportFileNameID).html"
         Write-Host "Exporting CNotes entry to file: $($exportFullFileName)"
-        New-Item $exportFullFileName -Value $html -force
-        Invoke-Expression $exportFullFileName
+        New-Item $exportFullFileName -Value $html -force | Out-Null
+        Invoke-Expression $exportFullFileName | Out-Null
         } #end of export html logic
-        break
+        return
     } #end of review logic
     
     #prep for incoming data
