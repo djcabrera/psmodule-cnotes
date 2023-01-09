@@ -10,7 +10,7 @@ function New-CNote {
     Clear-Host  
     #datafile location
     $notesFunctionDataFile = "$($env:USERPROFILE)\Documents\CNotes\notesFunctionData.csv"
-    try {Get-Item $notesFunctionDataFile -ErrorAction Stop | Out-Null} catch {New-Item $notesFunctionDataFile -Value "" -Force}
+    try {Get-Item $notesFunctionDataFile -ErrorAction Stop | Out-Null} catch {New-Item $notesFunctionDataFile -Value "" -Force | Out-Null}
 
     #helper functions
     function Get-NoteData { #display 'type' of data
